@@ -154,22 +154,35 @@
         document.getElementById('result').innerText = '';
         document.getElementById('answer').value = '';
     }
+function checkAnswer() {
+    const userAnswer = document.getElementById('answer').value.trim();
+    const correctAnswer = flags[currentFlagIndex].country;
 
-    function checkAnswer() {
-        const userAnswer = document.getElementById('answer').value.trim();
-        const correctAnswer = flags[currentFlagIndex].country;
+    console.log("Gebruikersantwoord:", userAnswer);
+    console.log("Correct antwoord:", correctAnswer);
 
-        if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
-            document.getElementById('result').innerText = 'Correct! 🎉';
-        } else {
-            document.getElementById('result').innerText = `Helaas, het juiste antwoord is ${correctAnswer}.`;
-        }
-
-        currentFlagIndex = (currentFlagIndex + 1) % flags.length;
-        loadFlag();
+    if (userAnswer === '') {
+        document.getElementById('result').innerText = 'Typ een antwoord in voordat je het controleert!';
+        console.log("Leeg antwoord ingevoerd.");
+        return; // Stop hier als het antwoord leeg is
     }
 
-    loadFlag();
+    if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+        document.getElementById('result').innerText = 'Correct! 🎉';
+        console.log("Correct antwoord ingevoerd.");
+    } else {
+        document.getElementById('result').innerText = `Helaas, het juiste antwoord is ${correctAnswer}.`;
+        console.log("Fout antwoord ingevoerd.");
+    }
+
+    // Wacht 2 seconden voordat de volgende vlag wordt geladen
+    setTimeout(() => {
+        currentFlagIndex = (currentFlagIndex + 1) % flags.length;
+        loadFlag();
+    }, 2000); // 2000 milliseconden = 2 seconden
+}
+
+
 </script>
 
 </body>
